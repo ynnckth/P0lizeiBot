@@ -18,7 +18,7 @@ class PolizeiBot {
         });
 
         this.telegramBot.on('message', async (message) => {
-            if (message.text && this.blacklistedTerms.some((v) => message.text.includes(v))) {
+            if (message.text && this.containsBlacklistedTerm(message)) {
                 try {
                     await this.telegramBot.deleteMessage(message.chat.id, message.message_id);
                     logger.info(`Deleted message containing blacklisted term\nChat id: ${message.chat.id}, message id: ${message.message_id}\nMessage: ${message.text}, user: ${message.from.first_name} ${message.from.last_name}`);
@@ -27,6 +27,10 @@ class PolizeiBot {
                 }
             }
         });
+    }
+
+    private containsBlacklistedTerm(message: TelegramBot.Message) {
+        return this.blacklistedTerms.some((v) => message.text.toLowerCase().includes(v.toLowerCase()));
     }
 
     private async sendMessage(chatId: number, message: string) {
