@@ -1,4 +1,5 @@
 import TelegramBot from 'node-telegram-bot-api';
+import logger from './config/logger';
 
 /**
  * This bot listens to messages from chats it is part of and deletes any messages that are blacklisted.
@@ -20,9 +21,9 @@ class PolizeiBot {
             if (message.text && this.blacklistedTerms.some((v) => message.text.includes(v))) {
                 try {
                     await this.telegramBot.deleteMessage(message.chat.id, message.message_id);
-                    console.log(`Deleted message containing blacklisted key word\nChat id: ${message.chat.id}, message id: ${message.message_id}\nMessage: ${message.text}, user: ${message.from.first_name} ${message.from.last_name}`);
+                    logger.info(`Deleted message containing blacklisted term\nChat id: ${message.chat.id}, message id: ${message.message_id}\nMessage: ${message.text}, user: ${message.from.first_name} ${message.from.last_name}`);
                 } catch (e) {
-                    console.log(`Failed to delete message (chat id: ${message.chat.id}, message id: ${message.message_id}): ${e}`);
+                    logger.error(`Failed to delete message (chat id: ${message.chat.id}, message id: ${message.message_id}): ${e}`);
                 }
             }
         });
@@ -32,7 +33,7 @@ class PolizeiBot {
         try {
             await this.telegramBot.sendMessage(chatId, message);
         } catch (e) {
-            console.log(`Failed to send message: ${e}`);
+            logger.error(`Failed to send message: ${e}`);
         }
     }
 }
