@@ -21,7 +21,7 @@ class PolizeiBot {
             if (message.text && this.containsBlacklistedTerm(message)) {
                 try {
                     await this.telegramBot.deleteMessage(message.chat.id, message.message_id);
-                    logger.info(`Deleted message containing blacklisted term\nChat id: ${message.chat.id}, message id: ${message.message_id}\nMessage: ${message.text}, user: ${message.from.first_name} ${message.from.last_name}`);
+                    logger.info(`Deleted message containing blacklisted term. Chat id: ${message.chat.id}, message id: ${message.message_id}. Message: ${message.text}, user: ${message.from.first_name} ${message.from.last_name}`);
                 } catch (e) {
                     logger.error(`Failed to delete message (chat id: ${message.chat.id}, message id: ${message.message_id}): ${e}`);
                 }
