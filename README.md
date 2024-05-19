@@ -13,15 +13,22 @@ To check the blacklist send the following message in the group chat:
 ## Deployment
 **Prerequisites**
 - Docker
-- Telegram bot should have been created in advance (through BotFather)
+- Telegram bot token (Telegram bot should have been created in advance through BotFather)
+- Comma-separated list of blacklisted terms
 
-1. Retrieve the bot's Telegram token through the BotFather.
-2. Build and run the docker container
+**Build and run using Docker**
+1. Retrieve the bot's Telegram token through the BotFather
+2. Build and run a docker container
 
 ```shell
 # Build the docker image
 $ docker build -t polizeibot .
 
 # Run a container
-$ docker run -d --name polizeibot --restart unless-stopped -e TELEGRAM_TOKEN=<YOUR TOKEN> polizeibot
+$ docker run -d \
+    --name polizeibot \
+    --restart unless-stopped \
+    -e TELEGRAM_TOKEN=<YOUR TOKEN> \
+    -e BLACKLIST=badword,otherbadword \
+    polizeibot
 ```

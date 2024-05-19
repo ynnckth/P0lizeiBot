@@ -4,9 +4,10 @@ import logger from './config/logger';
 
 require('dotenv').config();
 
-const BLACKLIST = ["lah", "lor"];
+const BLACKLIST = process.env.BLACKLIST.split(",");
+const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 
-const bot = new PolizeiBot(new TelegramBot(process.env.TELEGRAM_TOKEN, {polling: true}));
+const bot = new PolizeiBot(new TelegramBot(TELEGRAM_TOKEN, {polling: true}));
 
 bot.onGetBlacklist(async (message) => {
     await bot.sendMessage(message.chat.id, `🚫Blacklisted terms: ${BLACKLIST.join(", ")}`);
