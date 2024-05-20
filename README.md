@@ -10,11 +10,20 @@ Telegram bot that automatically deletes messages containing blacklisted terms.
 To check the blacklist send the following message in the group chat: 
 > /blacklist
 
+## Dev Setup
+**Prerequisites**
+- Node & NPM LTS
+
+Create a `.env` file on the top project folder level with the following content: 
+```env
+TELEGRAM_TOKEN=<your telegram token>
+BLACKLIST=<your comma-separated list of keywords>
+```
+
 ## Deployment
 **Prerequisites**
 - Docker
 - Telegram bot token (Telegram bot should have been created in advance through BotFather)
-- Comma-separated list of blacklisted terms
 
 **Build and run using Docker**
 1. Retrieve the bot's Telegram token through the BotFather
