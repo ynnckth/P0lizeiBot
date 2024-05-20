@@ -10,9 +10,7 @@ class PolizeiBot {
     constructor(private telegramBot: TelegramBot) {}
 
     onMessage(callback: (message: TelegramBot.Message) => void) {
-        this.telegramBot.on('message', async (message) => {
-            callback(message);
-        });
+        this.telegramBot.on('message', async (message) => callback(message));
     }
 
     onGetBlacklist(callback: (message: TelegramBot.Message) => void) {
