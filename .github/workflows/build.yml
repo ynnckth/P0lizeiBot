@@ -13,39 +13,25 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOCKER_REGISTRY: https://ghcr.io
-      DOCKER_IMAGE: ghcr.io/jamvas
       DOCKER_USERNAME: ${{ github.actor }}
       DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-      DOCKER_TARGET_PLATFORM: linux/arm/v7
 
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v2
 
       - name: "Set up Docker Buildx"
-        uses: crazy-max/ghaction-docker-buildx@v1
-        with:
-          version: latest
-
-      - name: "Prepare"
-        if: success()
-        id: prepare
-        run: |
-          echo ::set-output name=docker_platform::${DOCKER_TARGET_PLATFORM}        
-          echo ::set-output name=docker_image::${DOCKER_REGISTRY}/${DOCKER_IMAGE}        
-          echo ::set-output name=version::${GITHUB_RUN_NUMBER}
+        uses: docker/setup-buildx-action@v3
 
       - name: "Docker login"
         if: success()
         run: |
           echo "${DOCKER_PASSWORD}" | docker login ${DOCKER_REGISTRY} --username "${DOCKER_USERNAME}" --password-stdin
 
-      - name: "Build and publish"
+      - name: "Build and push Docker image"
         if: success()
-        run: |
-          ls -la && \
-          docker buildx build \        
-            --platform ${{ steps.prepare.outputs.docker_platform }} \        
-            --tag ${{ steps.prepare.outputs.docker_image }}:${{ steps.prepare.outputs.version }} \
-            --push \
-            .
+        uses: docker/build-push-action@v5
+        with:
+          tags: ghcr.io/P0lizeiBot:latest
+          platforms: linux/arm/v7
+          push: true
