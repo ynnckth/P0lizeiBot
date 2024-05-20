@@ -32,6 +32,6 @@ jobs:
         if: success()
         uses: docker/build-push-action@v5
         with:
-          tags: ghcr.io/P0lizeiBot:latest
+          tags: ghcr.io/p0lizeibot:latest
           platforms: linux/arm/v7
           push: true
