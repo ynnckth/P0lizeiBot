@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     env:
       DOCKER_REGISTRY: https://ghcr.io
       DOCKER_IMAGE: ghcr.io/jamvas
